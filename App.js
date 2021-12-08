@@ -1,39 +1,26 @@
-import React from 'react';
-
-import {SafeAreaView, StyleSheet, Text, View, TextInput} from 'react-native';
+import { getValues } from 'jest-validate/build/condition';
+import React from 'react'
+import {SafeAreaView, StyleSheet, Text, View, TextInput, FormDataEvent, Button} from 'react-native'
 
 
 const App = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-     
-      <View style={styles.gris}></View>
-
-      <Text style={styles.screen}>
+    return (
+      <SafeAreaView style={styles.container}>
        
-        Inscription
+        <View style={styles.gris}></View>
+          <Text style={styles.screen}>Inscription</Text>
 
-      </Text>
-        <TextInput
-      value={'Prénom'}
-      placeholder={'Prénom'}/>
-      onChangeText={() => console.log('onChangeText')}
-      onEndEditing={() => console.log('Input end')}
-      //secureTextEntry
-      <TextInput>
-        
-      </TextInput>
-      
-    </SafeAreaView>
-  );
+          <TextInput placeholder={'Prénom'}  onChangeText={ () => console.log('onChangeText')}
+                       onEndEditing={ () => console.log('Input end')}/>        
+      </SafeAreaView>
+    );
+
 };
 
 const styles = StyleSheet.create({
 gris: {
   flex : 5,
-  backgroundColor: "grey"
-
-  
+  backgroundColor: "grey",
   },
 });
 
