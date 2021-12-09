@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { getValues } from 'jest-validate/build/condition';
 import React from 'react'
 import { SafeAreaView, StyleSheet, Text, View, TextInput, FormDataEvent, Button } from 'react-native'
@@ -39,3 +40,28 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
   },
 });
+=======
+import apiHelper from 'apiHelper'
+
+const getYugioh = ({route , navigation }) => {
+
+const {id} = route.params 
+
+const [data , setData] = useState();
+
+const loadData = useCallback( async()=> {
+
+const res = await apiHelper.getYugiohData(id);
+
+setData(res.data);
+
+}, [id]);
+
+useEffect(() =>{
+
+    loadData();
+
+},[])
+
+}
+>>>>>>> Stashed changes
