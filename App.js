@@ -20,7 +20,7 @@ function HomeScreen() {
           <TextInput color="#841584" placeholder={'mdp'} value={myInputmdp}
           onChangeText={setmyInputmdp} onEndEditing={() =>console.log(myInputmdp)}/> 
 
-          <Button onPress={() =>{const myInput = myInputmdp + myInputname; console.log(myInput)}} title="connection"
+          <Button onPress={() =>{const myInput ="name: " + myInputmdp +" mdp: "+ myInputname; console.log(myInput)}} title="connection"
                   color="#841584"
                   accessibilityLabel="Learn more about this purple button"/>
 
