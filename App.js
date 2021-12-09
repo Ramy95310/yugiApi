@@ -11,16 +11,16 @@ function HomeScreen() {
   return (
     <SafeAreaView style={styles.gris}>
 
-      <View style={styles.gris}></View>
+      <View style={styles.gris}/>
       <Text>Inscription</Text>
 
       <TextInput backgoundcolor="#0000" color="#841584" placeholder={'pseudo'} value={myInputname}
           onChangeText={setmyInputname} onEndEditing={() =>console.log(myInputname)}/>
 
-          <TextInput secureTextEntry={true} color="#841584" placeholder={'mdp'} value={myInputmdp}
+          <TextInput color="#841584" placeholder={'mdp'} value={myInputmdp}
           onChangeText={setmyInputmdp} onEndEditing={() =>console.log(myInputmdp)}/> 
 
-          <Button onPress={() =>{const myInput ="name: " + myInputmdp +" mdp: "+ myInputname; console.log(myInput)}} title="connection"
+          <Button onPress={() =>{const myInput ="name: " + myInputname +" mdp: "+ myInputmdp ; console.log(myInput)}} title="connection"
                   color="#841584"
                   accessibilityLabel="Learn more about this purple button"/>
 
