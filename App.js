@@ -1,20 +1,29 @@
-<<<<<<< Updated upstream
-import { getValues } from 'jest-validate/build/condition';
-import React from 'react'
+import { getValues  } from 'jest-validate/build/condition';
+import React , { useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, View, TextInput, FormDataEvent, Button } from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function HomeScreen() {
+  const [myInputname, setmyInputname]=useState("");
+  const [myInputmdp, setmyInputmdp]=useState("");
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.gris}>
 
       <View style={styles.gris}></View>
-      <Text style={styles.screen}>Inscription</Text>
+      <Text>Inscription</Text>
 
-      <TextInput placeholder={'Prénom'} onChangeText={() => console.log('onChangeText')}
-        onEndEditing={() => console.log('Input end')} />
+      <TextInput backgoundcolor="#0000" color="#841584" placeholder={'pseudo'} value={myInputname}
+          onChangeText={setmyInputname} onEndEditing={() =>console.log(myInputname)}/>
+
+          <TextInput color="#841584" placeholder={'mdp'} value={myInputmdp}
+          onChangeText={setmyInputmdp} onEndEditing={() =>console.log(myInputmdp)}/> 
+
+          <Button onPress={() =>{const myInput = myInputmdp + myInputname; console.log(myInput)}} title="connection"
+                  color="#841584"
+                  accessibilityLabel="Learn more about this purple button"/>
+
     </SafeAreaView>
   );
 }
@@ -40,28 +49,3 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
   },
 });
-=======
-import apiHelper from 'apiHelper'
-
-const getYugioh = ({route , navigation }) => {
-
-const {id} = route.params 
-
-const [data , setData] = useState();
-
-const loadData = useCallback( async()=> {
-
-const res = await apiHelper.getYugiohData(id);
-
-setData(res.data);
-
-}, [id]);
-
-useEffect(() =>{
-
-    loadData();
-
-},[])
-
-}
->>>>>>> Stashed changes
