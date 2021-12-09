@@ -17,7 +17,7 @@ function HomeScreen() {
       <TextInput backgoundcolor="#0000" color="#841584" placeholder={'pseudo'} value={myInputname}
           onChangeText={setmyInputname} onEndEditing={() =>console.log(myInputname)}/>
 
-          <TextInput color="#841584" placeholder={'mdp'} value={myInputmdp}
+          <TextInput secureTextEntry={true} color="#841584" placeholder={'mdp'} value={myInputmdp}
           onChangeText={setmyInputmdp} onEndEditing={() =>console.log(myInputmdp)}/> 
 
           <Button onPress={() =>{const myInput ="name: " + myInputmdp +" mdp: "+ myInputname; console.log(myInput)}} title="connection"
