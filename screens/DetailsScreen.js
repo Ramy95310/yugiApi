@@ -29,8 +29,7 @@ const getYugiohData = ()=> {
     return (
         <SafeAreaView style={styles.gris}>
 
-            <Text>{data}</Text>
-
+            <Text color="#841584">{data}</Text>
 
         </SafeAreaView>
     );

@@ -1,6 +1,6 @@
 import { reduxForm, Field } from "redux-form";
-import  {createStackNavigator} from '/app'
-import App from "./App";
+import  {createStackNavigator} from '/Users/hlagh/Documents/CODING/react native/yugiApi/App'
+import App from "../App";
 
 const navigation = () =>{
     return (

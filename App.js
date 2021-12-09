@@ -16,7 +16,7 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import getYugiohData from "./DetailsScreen";
+import getYugiohData from "./screens/DetailsScreen";
 
 function HomeScreen({navigation}) {
     const [myInputname, setmyInputname] = useState('');
