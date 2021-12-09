@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HomeScreen() {
   const [myInputname, setmyInputname] = useState('');
-
   const [myInputmdp, setmyInputmdp] = useState('');
   console.log(myInputmdp);
   const storeData = async (myInputname, myInputmdp) => {
