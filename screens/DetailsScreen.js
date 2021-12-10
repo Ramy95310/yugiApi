@@ -9,15 +9,17 @@ import {
     FormDataEvent,
     Button,
     FlatList,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 
 
-const getYugiohData = ()=> {
+const getYugiohData = ({navigation})=> {
+
+    
     var [DATA,setData] = useState({})
     var [isLoading, setLoading] = useState(true)
-
-
+    const [filtered, updateFiltered] = useState('')
 
 
     useEffect(()=>{
@@ -27,9 +29,7 @@ const getYugiohData = ()=> {
             .then((response) => response.json())
             .then((json) => {
                 setLoading(false)
-
                 setData(json.data)
-                console.log(DATA)
             })
             .catch((error) => {
                 console.error(error);
@@ -45,10 +45,18 @@ const getYugiohData = ()=> {
     return (
         <SafeAreaView>
             <View>
+            <TextInput 
+        value={filtered}
+        placeholder="recherche"
+        onChangeText={updateFiltered}
+        />
+        <TouchableOpacity onPress={()=>{navigation.navigate('Liked')}}>
+            <Text>Go to liked card</Text>
+        </TouchableOpacity>
                 <FlatList data={DATA}
                           keyExtractor={(item, index) => 'key' + index}
                           renderItem={({item}) => {
-                              return <CardYugi item={item}/>
+                              return item.name.includes(filtered) ? <CardYugi item={item}/> : null
                           }}
                 />
             </View>
