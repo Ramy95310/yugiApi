@@ -1,3 +1,5 @@
+#groupe: Houssam Ramy Railas Quentin
+######*Franck absent*
 # Getting Started with Create React App
 
 ####hi this app is an app where you can find all yugi yo cards with a dynamic filter system.
@@ -21,3 +23,4 @@ do in another cmd:
 ### `yarn android`
 
 and have fun
+
