@@ -1,20 +1,67 @@
-import React from 'react'
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,useState,useEffect,Button } from 'react-native'
-const card = ('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Tornado%20Dragon')
-import  axios from 'axios';
-import apiHelper from '../'
+import React, {useEffect, useState} from 'react';
+import CardYugi from './cardYugi';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  FormDataEvent,
+  Button,
+  FlatList,
+  Image
+} from 'react-native';
 
-const getYugiohData = async => {
 
-const res = await axios ({
+const getYugiohData = ()=> {
+var [DATA,setData] = useState({}) 
+var [isLoading, setLoading] = useState(true)
 
-methode: 'get',
-url: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Tornado%20Dragon' + name,
-});
 
-return res.data;
+
+
+useEffect(()=>{
+ 
+  console.log('creation')
+    fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php')
+    .then((response) => response.json())
+    .then((json) => {
+       setLoading(false)
+       
+       setData(json.data)
+       console.log(DATA)
+    })
+    .catch((error) => {
+      console.error(error);
+      setLoading(false)
+    });
+},[])
+
+if (isLoading) return(
+  <View>
+    <Text>is Loading</Text>
+  </View>
+)
+return (
+    <SafeAreaView>
+             <View>
+            <FlatList data={DATA}
+                keyExtractor={(item, index) => 'key' + index}
+                renderItem={({item}) => {
+                    return <CardYugi item={item}/>
+                }}
+            />
+        </View>
+    </SafeAreaView>
+  );
 };
 
-export default {getYugioh};
+const styles = StyleSheet.create({
+  sectionContainer1: {
+    width:40,
+    height: 40
+  }})
+
+export default getYugiohData;
 
 

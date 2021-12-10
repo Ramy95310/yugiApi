@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,13 +7,21 @@ import {
   TextInput,
   FormDataEvent,
   Button,
+  TouchableOpacity,
 } from 'react-native';
 
+import getYugiohData from './helper'
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function HomeScreen() {
+function HomeScreen(props) {
+  const {navigation} = props
+
+  const goToYugi = useCallback(()=>{
+    navigation.navigate('yugi')
+  },[navigation])
+
   const [myInputname, setmyInputname] = useState('');
   const [myInputmdp, setmyInputmdp] = useState('');
   console.log(myInputmdp);
@@ -48,7 +56,9 @@ function HomeScreen() {
     <SafeAreaView style={styles.gris}>
       <View style={styles.gris} />
       <Text>Inscription</Text>
-
+      <TouchableOpacity onPress={goToYugi}>
+        <Text>yugi</Text>
+      </TouchableOpacity>
       <TextInput
         backgoundcolor="#0000"
         color="#841584"
@@ -95,8 +105,9 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator  initialRouteName = 'home' >
+        <Stack.Screen name="home" component={HomeScreen} />
+        <Stack.Screen name="yugi" component={getYugiohData} />
       </Stack.Navigator>
     </NavigationContainer>
   );
