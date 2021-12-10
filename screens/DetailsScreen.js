@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import CardYugi from './cardYugi';
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,41 +9,57 @@ import {
     FormDataEvent,
     Button,
     FlatList,
+    Image
 } from 'react-native';
 
-const getYugiohData = ()=> {
 
-    const [data,setData] = useState('')
+const getYugiohData = ()=> {
+    var [DATA,setData] = useState({})
+    var [isLoading, setLoading] = useState(true)
+
+
+
 
     useEffect(()=>{
-        fetch('https://db.ygoprodeck.com/api/v7/randomcard.php')
+
+        console.log('creation')
+        fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php')
             .then((response) => response.json())
             .then((json) => {
-                setData(json.name)
+                setLoading(false)
+
+                setData(json.data)
+                console.log(DATA)
             })
             .catch((error) => {
                 console.error(error);
+                setLoading(false)
             });
-
     },[])
 
+    if (isLoading) return(
+        <View>
+            <Text color="#841584">is Loading</Text>
+        </View>
+    )
     return (
-        <SafeAreaView style={styles.gris}>
-
-            <Text color="#841584">{data}</Text>
-
+        <SafeAreaView>
+            <View>
+                <FlatList data={DATA}
+                          keyExtractor={(item, index) => 'key' + index}
+                          renderItem={({item}) => {
+                              return <CardYugi item={item}/>
+                          }}
+                />
+            </View>
         </SafeAreaView>
     );
 };
 
-export default getYugiohData;
 const styles = StyleSheet.create({
-    gris: {
-        flex: 5,
-        backgroundColor: 'grey',
-    },
-    cen: {
-        flex: 5,
-        alignContent: "center",
-    }
-});
+    sectionContainer1: {
+        width:40,
+        height: 40
+    }})
+
+export default getYugiohData;
