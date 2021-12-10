@@ -1,112 +1,153 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
+    Button,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    ActivityIndicator,
+    FlatList,
+    TouchableOpacity,
+    FormDataEvent
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import getYugiohData from "./screens/DetailsScreen";
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+function HomeScreen({navigation}) {
+    const [myInputname, setmyInputname] = useState('');
+    const [myInputmdp, setmyInputmdp] = useState('');
+    const [newpagelog, setnewpagelog] = useState(false);
+    //var newpagelog = false;
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+    console.log(myInputmdp);
+    const storeData = async (myInputname, myInputmdp) => {
+        try {
+            const dataname = JSON.stringify(myInputname);
+            const datamdp = JSON.stringify(myInputmdp);
+            AsyncStorage.setItem('@name', dataname);
+            AsyncStorage.setItem('@mdp', datamdp);
+            console.log('store: ' + ' ' + dataname + ' ' + datamdp);
+            return dataname && datamdp;
+        } catch (e) {
+            // saving error
+            console.log('caca');
+        }
+    };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+    const getData = async () => {
+        try {
+            const dataname = await AsyncStorage.getItem('@name');
+            const datamdp = await AsyncStorage.getItem('@mdp');
+
+            if (dataname != null || datamdp != null) {
+                const dataall = JSON.parse(datamdp) + ' ' + JSON.parse(dataname);
+
+                // value previously stored
+                return console.log(dataall);
+            }
+        } catch (e) {
+        }
+    };
+
+    const verifconnect = async () => {
+        const storedataname = await AsyncStorage.getItem('@name');
+        const storedatamdp = await AsyncStorage.getItem('@mdp');
+
+        const inputdataname = JSON.stringify(myInputname);
+        const inputdatamdp = JSON.stringify(myInputmdp);
+
+        console.log("store= " + storedataname + " " + storedatamdp)
+        console.log("input= " + inputdataname + " " + inputdatamdp)
+        if (storedataname === inputdataname && storedatamdp === inputdatamdp) {
+            console.log("connect!!!!")
+            return true;
+        } else {
+            console.log("nop")
+            return false;
+        }
+    };
+
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <SafeAreaView style={styles.gris}>
+            <View style={styles.gris}/>
+            <Text>Inscription</Text>
+
+            <TextInput
+                backgoundcolor="#0000"
+                color="#841584"
+                placeholder={'pseudo'}
+                value={myInputname}
+                onChangeText={setmyInputname}
+                onEndEditing={() => console.log(myInputname)}
+            />
+
+            <TextInput
+                secureTextEntry={true}
+                color="#841584"
+                placeholder={'mdp'}
+                value={myInputmdp}
+                onChangeText={setmyInputmdp}
+                onEndEditing={() => console.log(myInputmdp)}
+            />
+
+            <Button
+                onPress={() => {
+                    const myInput = 'name: ' + myInputname + ' mdp: ' + myInputmdp;
+                    console.log(myInput);
+                    return storeData(myInputname, myInputmdp);
+                }}
+                title="inscription"
+                color="#841584"
+                accessibilityLabel="Learn more about this purple button"
+            />
+
+            <Button
+                onPress={() => {
+                    if (verifconnect()) {
+                        navigation.navigate('Details')
+                        console.log("Details")
+                    }
+                }}
+                title="connection"
+                color="#841584"
+                accessibilityLabel="Learn more about this purple button"
+            />
+        </SafeAreaView>
+    );
+}
+
+
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={HomeScreen}/>
+                <Stack.Screen name="Details" component={getYugiohData}/>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
 
 export default App;
+
+const styles = StyleSheet.create({
+    gris: {
+        flex: 5,
+        backgroundColor: 'grey',
+    },
+    cen: {
+        flex: 5,
+        alignContent: "center",
+    }
+});
